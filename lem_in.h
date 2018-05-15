@@ -35,4 +35,7 @@ typedef struct		s_main
 	t_room			**start;
 }					t_main;
 
+int		validate_int_input(char *line);
+int		validate_as_rooms(char *line);
+
 #endif

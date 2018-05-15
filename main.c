@@ -20,4 +20,5 @@ int		main(int argc, char **args)
 		return (0);
 	MALCHK((lem = (t_main*)malloc(sizeof(t_main))));
 	read_input(lem);
+	return (0);
 }
