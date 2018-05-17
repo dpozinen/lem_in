@@ -10,5 +10,49 @@
 #                                                                              #
 #******************************************************************************#
 
-LEMSRC = main.c read.c tools.c
+LEMSRC = read.c tools_1.c main.c tools_2.c
 OBJDIR = objects
+FLAGS = -Wall -Werror -Wextra
+
+LEMOBJ = $(addprefix $(OBJDIR)/, $(LEMSRC:.c=.o))
+
+LEMLIBNAME = lem_in_lib.a
+NAME = lem_in
+
+all: $(NAME)
+
+$(NAME): make_lib $(OBJDIR) $(LEMOBJ)
+	@ar rc $(LEMLIBNAME) $(LEMOBJ)
+	@gcc $(FLAGS) -o $(NAME) $(LEMLIBNAME) libft/libft.a -I libft/libft.h
+	@echo "made ./$(NAME)"
+
+make_lib:
+	@make -C libft
+
+$(OBJDIR):
+	@mkdir $(OBJDIR)
+
+$(LEMOBJ) : $(OBJDIR)/%.o : %.c
+	@gcc $(FLAGS) -c $< -o $@
+
+clean:
+	@rm -rf $(OBJDIR)
+	@rm lem_in_lib.a
+	@rm $(NAME)
+	@rm $(NAME)_debug
+
+fclean: clean
+	@make fclean -C libft
+	@rm *~
+
+re: fclean all
+
+go: $(NAME)
+	./$(NAME) test
+
+d: make_lib $(OBJDIR) $(LEMOBJ)
+	@ar rc $(LEMLIBNAME) $(LEMOBJ)
+	@gcc $(FLAGS) -g -o $(NAME)_debug $(LEMSRC) libft/libft.a -I libft/libft.h
+	@echo "made ./$(NAME)_debug"
+
+	

@@ -1,6 +1,11 @@
 # Custom
 *.DS_Store
 *~
+*test
+.vscode
+objects
+lem_in
+lem_in_debug
 
 # Prerequisites
 *.d

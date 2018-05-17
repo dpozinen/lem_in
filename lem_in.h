@@ -31,11 +31,19 @@ typedef struct		s_main
 	char			*start;
 	char			*end;
 	int				best_result;
+	int				room_quantity;
 	int				**rooms_matrix;
-	t_room			**start;
+	t_room			**head;
 }					t_main;
 
-int		validate_int_input(char *line);
-int		validate_as_rooms(char *line);
+void		shutdown(t_main *lem, char *line);//TODO: free int array & room list
+t_main		*boot_struct();
+
+int			validate_as_int(char *line);
+int			validate_as_room(char *line);
+int			validate_as_link(char *line);
+
+int			read_input(t_main *lem);
+char		*get_room_name(char *line);
 
 #endif
