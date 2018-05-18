@@ -19,10 +19,14 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 
+# define SHUTLEM(x) if (!x) shutdown(lem, 0);
+# define SHUTLEMLINE(x) if (!x) shutdown(lem, line);
+
 typedef struct		s_room
 {
 	char			*name;
 	int				index;
+	struct s_room	*next;
 }					t_room;
 
 typedef struct		s_main
@@ -31,19 +35,23 @@ typedef struct		s_main
 	char			*start;
 	char			*end;
 	int				best_result;
-	int				room_quantity;
-	int				**rooms_matrix;
-	t_room			**head;
+	int				rooms;
+	int				**room_matrix;
+	t_room			*head;
 }					t_main;
 
-void		shutdown(t_main *lem, char *line);//TODO: free int array & room list
+void		shutdown(t_main *lem, char *line);//TODO: free int array
 t_main		*boot_struct();
+void		print_room_list(t_room *head);
+t_room		*make_room_list(t_main *lem, char *line);
+int			**make_matrix(t_main *lem);
+char		*get_room_name(char *line);
 
 int			validate_as_int(char *line);
 int			validate_as_room(char *line);
 int			validate_as_link(char *line);
 
 int			read_input(t_main *lem);
-char		*get_room_name(char *line);
+
 
 #endif

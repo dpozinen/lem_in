@@ -12,26 +12,36 @@
 
 #include "lem_in.h"
 
-t_main		*boot_struct(void)
+t_main	*boot_struct(void)
 {
 	t_main *lem;
 
 	MALCHK((lem = (t_main*)malloc(sizeof(t_main))));
 	lem->start = 0;
 	lem->end = 0;
-	lem->rooms_matrix = 0;
+	lem->room_matrix = 0;
 	lem->head = 0;
+	lem->rooms = 0;
 	return (lem);
 }
 
-void	shutdown(t_main *lem, char *line)//TODO: free int array & room list
+void	shutdown(t_main *lem, char *line)//TODO: free int array
 {
+	t_room *t;
+
 	if (lem)
 	{
 		if (lem->start)
 			free(lem->start);
 		if (lem->end)
 			free(lem->end);
+	}
+	while (lem->head)
+	{
+		t = lem->head->next;
+		free(lem->head->name);
+		free(lem->head);
+		lem->head = t;
 	}
 	free(lem);
 	if (line)
@@ -55,21 +65,19 @@ int		validate_as_room(char *line)
 	int i;
 	int	spaces;
 
-	if (!*line || !ft_isdigit(*line))
+	MALCHK(*line);
+	i = get_char_index(line, ' ') + 1;
+	spaces = 1;
+	if (!ft_isdigit(line[i]))
 		return (0);
-	i = 0;
-	spaces = 0;
-	while (i < 3)
+	while (line[i])
 	{
-		while (ft_isdigit(*line))
-			line++;
-		if (*line && *line != ' ')
+		if (!ft_isdigit(line[i]) && line[i] != ' ')
 			return (0);
-		*line == ' ' ? spaces++ : 0;
-		line++;
+		line[i] == ' ' ? spaces++ : 0;
 		i++;
 	}
-	if (*line != '\0' || spaces != 2)
+	if (spaces != 2)
 		return (0);
 	return (1);
 }

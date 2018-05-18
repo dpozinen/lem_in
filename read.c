@@ -1,50 +1,70 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c		                                        :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpozinen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/15 14:53:56 by dpozinen          #+#    #+#             */
-/*   Updated: 2018/05/15 14:53:57 by dpozinen         ###   ########.fr       */
+/*   Created: 2018/05/18 11:34:23 by dpozinen          #+#    #+#             */
+/*   Updated: 2018/05/18 11:34:26 by dpozinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	add_link(t_main *lem, char* line)
+void	add_link(t_main *lem, char *line)
 {
-	(void)lem;
-	fprintf(stderr, "read link: %s\n", line);
+	int i;
+	int j;
+
+	if (!lem->room_matrix)
+		SHUTLEMLINE((lem->room_matrix = make_matrix(lem)));
+	i = ft_atoi(line);
+	j = ft_atoi((line + get_char_index(line, '-') + 1));
+	lem->room_matrix[i][j] = 1;
 }
 
 void	add_room(t_main *lem, char *line)
 {
-	(void)lem;
-	fprintf(stderr, "made room: %s\n", get_room_name(line));	
+	t_room	*t;
+	char	*room_name;
+
+	SHUTLEMLINE((room_name = get_room_name(line)));
+	if (!lem->head)
+	{
+		SHUTLEMLINE((lem->head = make_room_list(lem, room_name)));
+		lem->rooms++;
+		return ;
+	}
+	t = lem->head;
+	SHUTLEMLINE(ft_strcmp(t->name, room_name));
+	while (t->next)
+	{
+		SHUTLEMLINE(ft_strcmp(t->name, room_name));
+		t = t->next;
+	}
+	SHUTLEMLINE((t->next = make_room_list(lem, room_name)));
+	lem->rooms++;
 }
 
-void	add_command(char *line, t_main *lem, int flag)
+void	add_command(char *line, t_main *lem)
 {
+	int f;
+
+	f = 0;
+	if (!ft_strcmp("##start", line))
+		f = 1;
+	else if (!ft_strcmp("##end", line))
+		f = 2;
+	if (f == 0)
+		return ;
 	get_next_line(0, &line);
-	if (!validate_as_room(line))
-		shutdown(lem, line);
+	SHUTLEMLINE(validate_as_room(line));
 	add_room(lem, line);
-	if (flag == 1)
+	if (f == 1)
 		lem->start = ft_strdup(get_room_name(line));
 	else
-		lem->end = ft_strdup(get_room_name(line));		
-}
-
-int		check_command(char *line, t_main *lem)
-{
-	if (!*line)
-		return (0);
-	if (!ft_strcmp("##start", line))
-		add_command(line, lem, 1);
-	else if (!ft_strcmp("##end", line))
-		add_command(line, lem, 2);
-	return (1);
+		lem->end = ft_strdup(get_room_name(line));
 }
 
 int		read_input(t_main *lem)
@@ -58,12 +78,22 @@ int		read_input(t_main *lem)
 	while (get_next_line(0, &line))
 	{
 		if (*line == '#')
-			check_command(line, lem);
+			add_command(line, lem);
 		else if (validate_as_room(line))
 			add_room(lem, line);
 		else if (validate_as_link(line))
 			add_link(lem, line);
+		else
+			break ;//shutdown(lem, line);
 		free(line);
+	}
+	print_room_list(lem->head);
+	fprintf(stderr, "start = %s, end = %s\n", lem->start, lem->end);
+	for (int i = 0; i < lem->rooms; i++)
+	{	
+		for (int j = 0; j < lem->rooms; j++)
+			printf("%d ", lem->room_matrix[i][j]);
+		printf("\n");
 	}
 	return (1);
 }

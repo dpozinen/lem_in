@@ -15,7 +15,7 @@
 int		main(void)
 {
 	t_main *lem;
-	
+
 	MALCHK((lem = boot_struct()));
 	read_input(lem);
 	return (0);
