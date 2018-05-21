@@ -22,6 +22,13 @@
 # define SHUTLEM(x) if (!x) shutdown(lem, 0);
 # define SHUTLEMLINE(x) if (!x) shutdown(lem, line);
 
+typedef struct		s_route
+{
+	int				*route;
+	int				length;
+	struct s_route	*next;
+}					t_route;
+
 typedef struct		s_room
 {
 	char			*name;
