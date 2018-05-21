@@ -46,6 +46,7 @@ void	shutdown(t_main *lem, char *line)//TODO: free int array
 	free(lem);
 	if (line)
 		free(line);
+	ft_printf("ERROR\n");
 	exit(0);
 }
 
@@ -66,6 +67,7 @@ int		validate_as_room(char *line)
 	int	spaces;
 
 	MALCHK(*line);
+	MALCHK((*line != 'L'));
 	i = get_char_index(line, ' ') + 1;
 	spaces = 1;
 	if (!ft_isdigit(line[i]))
@@ -84,6 +86,7 @@ int		validate_as_room(char *line)
 
 int		validate_as_link(char *line)
 {
+
 	if (!*line || !ft_isdigit(*line))
 		return (0);
 	while (*line && ft_isdigit(*line))

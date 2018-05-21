@@ -72,7 +72,7 @@ int		read_input(t_main *lem)
 	char	*line;
 
 	RDCHK(get_next_line(0, &line));
-	MALCHK(validate_as_int(line));
+	SHUTLEMLINE(validate_as_int(line));
 	MALCHK((lem->ants = ft_atoi(line)));
 	free(line);
 	while (get_next_line(0, &line))
@@ -84,9 +84,11 @@ int		read_input(t_main *lem)
 		else if (validate_as_link(line))
 			add_link(lem, line);
 		else
-			break ;//shutdown(lem, line);
+			break ; //shutdown(lem, line);
 		free(line);
 	}
+
+/* 
 	print_room_list(lem->head);
 	fprintf(stderr, "start = %s, end = %s\n", lem->start, lem->end);
 	for (int i = 0; i < lem->rooms; i++)
@@ -95,5 +97,7 @@ int		read_input(t_main *lem)
 			printf("%d ", lem->room_matrix[i][j]);
 		printf("\n");
 	}
+*/
+
 	return (1);
 }
