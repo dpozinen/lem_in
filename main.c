@@ -18,5 +18,7 @@ int		main(void)
 
 	MALCHK((lem = boot_struct()));
 	read_input(lem);
+	find_route(lem);
+	shutdown(lem, 0);
 	return (0);
 }
