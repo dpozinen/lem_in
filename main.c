@@ -18,7 +18,8 @@ int		main(void)
 
 	MALCHK((lem = boot_struct()));
 	read_input(lem);
-	find_route(lem);
+	printf("im out\n");
+	execute(lem);
 	shutdown(lem, 0);
 	return (0);
 }

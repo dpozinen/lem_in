@@ -20,7 +20,8 @@ t_main	*boot_struct(void)
 	lem->start = 0;
 	lem->end = 0;
 	lem->room_matrix = 0;
-	lem->head = 0;
+	lem->r_head = 0;
+	lem->p_head = 0;
 	lem->rooms = 0;
 	return (lem);
 }
@@ -36,12 +37,12 @@ void	shutdown(t_main *lem, char *line)//TODO: free int array
 		if (lem->end)
 			free(lem->end);
 	}
-	while (lem->head)
+	while (lem->r_head)
 	{
-		t = lem->head->next;
-		free(lem->head->name);
-		free(lem->head);
-		lem->head = t;
+		t = lem->r_head->next;
+		free(lem->r_head->name);
+		free(lem->r_head);
+		lem->r_head = t;
 	}
 	free(lem);
 	if (line)
@@ -84,16 +85,21 @@ int		validate_as_room(char *line)
 	return (1);
 }
 
-int		validate_as_link(char *line)
+int		validate_as_link(char *line, t_main *lem)
 {
-
+	if (get_room_index(lem->r_head, get_room_name(line, '-')) == -1)
+		return (0);
 	if (!*line || !ft_isdigit(*line))
 		return (0);
 	while (*line && ft_isdigit(*line))
 		line++;
 	if ((*line && *line != '-') || !*line)
 		return (0);
-	if (!validate_as_int(++line))
+	line++;
+	if (get_room_index(lem->r_head, line) == -1)
+		return (0);
+	if (!validate_as_int(line))
 		return (0);
 	return (1);
 }
+
