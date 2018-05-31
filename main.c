@@ -20,6 +20,7 @@ int		main(void)
 	read_input(lem);
 	printf("im out\n");
 	execute(lem);
-	shutdown(lem, 0);
+	// shutdown(lem, 0);
+	// printf("%d", ft_atoi("01));
 	return (0);
 }

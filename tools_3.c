@@ -67,7 +67,7 @@ int		count_path_length(int *arr, int size)
 			c++;
 		i++;
 	}
-	return (c);
+	return (c - 1);
 }
 
 int		find_int_in_arr(int i, int *arr, int size)

@@ -20,6 +20,7 @@ int		add_path_to_list(int *current_path, t_main *lem)
 	path->path = intdup(current_path, lem->rooms);
 	path->name = (lem->p_head ? lem->p_head->name + 1 : 0);
 	path->length = count_path_length(current_path, lem->rooms);
+	printf("path name = %2d.		",path->name);
 	if (!lem->p_head)
 	{
 		lem->p_head = path;
@@ -38,6 +39,7 @@ void	find_paths(int cur, int *current_path, t_main *lem)
 	if (cur == lem->iend)
 	{
 		add_path_to_list(current_path, lem);
+		lem->paths++;
 		for (int i = 0; i < lem->rooms; i++)
 		{
 			room_name = find_room_name(lem->r_head, current_path[i]);

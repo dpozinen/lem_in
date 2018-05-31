@@ -39,7 +39,9 @@ typedef struct		s_room
 
 typedef struct		s_main
 {
+	int				paths;
 	unsigned int	ants;
+	char			*input_s;
 	char			*start;
 	int				istart;
 	char			*end;
@@ -72,5 +74,5 @@ int			validate_as_link(char *line, t_main *lem);
 
 int			read_input(t_main *lem);
 int			execute(t_main *lem);
-
+int			choose_paths(t_main *lem);
 #endif

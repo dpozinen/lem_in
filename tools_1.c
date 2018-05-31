@@ -23,6 +23,8 @@ t_main	*boot_struct(void)
 	lem->r_head = 0;
 	lem->p_head = 0;
 	lem->rooms = 0;
+	lem->paths = 0;
+	MALCHK((lem->input_s = ft_strnew(1)));
 	return (lem);
 }
 
@@ -89,17 +91,14 @@ int		validate_as_link(char *line, t_main *lem)
 {
 	if (get_room_index(lem->r_head, get_room_name(line, '-')) == -1)
 		return (0);
-	if (!*line || !ft_isdigit(*line))
+	if (!*line)
 		return (0);
-	while (*line && ft_isdigit(*line))
+	while (*line && *line != '-')
 		line++;
-	if ((*line && *line != '-') || !*line)
-		return (0);
 	line++;
 	if (get_room_index(lem->r_head, line) == -1)
 		return (0);
-	if (!validate_as_int(line))
-		return (0);
+	
 	return (1);
 }
 
