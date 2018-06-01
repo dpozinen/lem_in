@@ -12,8 +12,7 @@
 
 #include "lem_in.h"
 
-/*
-int		get_efficiency(int *set, int ants, t_path *path)//ants+links-1
+/* int		get_efficiency_2(int *set, int ants, t_path *path)//ants+links-1
 {
 	int path1;
 	int path2;
@@ -31,91 +30,89 @@ int		get_efficiency(int *set, int ants, t_path *path)//ants+links-1
 		while (path1 <= ants - path2)
 		{
 			holder_p1 = path1 + get_path_length(path, set[0]) - 1;
-			holder_p2 = ants - path1 - path2 + get_path_length(path, set[1]) - 1;
-			
+			holder_p2 =
+				ants - path1 - path2 + get_path_length(path, set[1]) - 1;
+
 			int c = max_3(holder_p1, holder_p2, holder_p3);
 			min == 0 ? min = c : 0;
 			if (min > c)
 				min = c;
-			
-			
-			// printf("min = %d; holder_p1 = %d; holder_p2 = %d; holder3 = %d\n", min, holder_p1, holder_p2, holder_p3);
-			if (c == 11)
-				printf("path2 = %d; path1 = %d; c = %d\n\n", path1, path2, c);
+			if (c == 8)
+			{
+			 	printf("using top = %d; using middle = %d;
+			using bottom = %d, c = %d\n", path2, path1, ants-path2-path1, c);
+			 	printf("using top = %d; using middle = %d;
+			using bottom = %d\n\n", holder_p3, holder_p1, holder_p2);
+			}
 			path1++;
 		}
 		path2++;
 	}
 	return (min);
-}
-*/
+} */
 
-int		intersect(int *arr1, int *arr2, int size, int end)
+static void	increment(int *path_congestion, int *lengths)
 {
-	int i;
+	(*path_congestion)++;
+	(*lengths)++;
+}
 
-	i = 1;
-	while (i < size)
+int			get_efficiency(int *lengths, int n_of_paths, t_main *lem)
+{
+	int				worst;
+	int				i;
+	int				*path_congestion;
+	unsigned int	ants_sum;
+
+	worst = max_int_arr(lengths, n_of_paths);
+	path_congestion = make_int_arr(n_of_paths, 1);
+	ants_sum = sum_int_array(path_congestion, n_of_paths);
+	while (ants_sum < lem->ants)
 	{
-		if (find_int_in_arr(arr1[i], arr2, size) && arr1[i] != end)
-			return (1);
-		i++;
+		i = 0;
+		while (i < n_of_paths && ants_sum < lem->ants)
+		{
+			if (ants_sum == lem->ants - 1)
+				i = find_min_index(lengths, n_of_paths);
+			if (lengths[i] < worst || lengths[i] > worst)
+				increment(&path_congestion[i], &lengths[i]);
+			else if (lengths[i] == worst &&
+					check_other_paths(lengths, worst, n_of_paths))
+				increment(&path_congestion[i], &lengths[i]);
+			ants_sum = sum_int_array(path_congestion, n_of_paths);
+			i++;
+		}
 	}
-	return (0);
+	return (max_int_arr(lengths, n_of_paths));
 }
 
-int		get_min_path(t_path *path)
-{
-	int min;
+// int			make_best_set(t_main *lem)
+// {
 
-	min = path->length;
-	while (path)
-	{
-		if (min > path->length)
-			min = path->length;
-		path = path->next;
-	}
-	return (min);
-}
+// 	return (0);
+// }
 
-int		get_path_length(t_path *path, int name)
-{
-	while (path)
-	{
-		if (name == path->name)
-			return (path->length);
-		path = path->next;
-	}
-	return (0);
-}
-
-int max_3(int a, int b, int c)
-{
-	if (a >= b)
-		if (a >= c)
-			return (a);
-	if (b >= a)
-		if (b >= c)
-			return (b);
-	return (c);
-}
-
-int		make_set(int set_n, t_main *lem)
+int			choose_paths(t_main *lem)
 {
 	(void)lem;
-	(void)set_n;
-	return (0);
-}
+// 	int		set_n;
+// 	int		min;
+// 	int		*lengths;
+// 	int		*set;
 
-int		choose_paths(t_main *lem)
-{
-	int		set_n;
-	int		min;
-	// int		holder;
-	int		*sets;
+// 	set_n = 2;
 
-	set_n = 2;
-	MALCHK((sets = init_path(lem->paths)));
+/* 	MALCHK((set = make_int_arr(lem->paths, 0)));
+	set[0] = 10;
+	set[1] = 15;
+	set[2] = 3;
+	printf("ants = %d\n", lem->ants);
+	lengths = get_set_lengths(set, 3, lem->p_head);
+	min = get_efficiency(lengths, 3, lem);
+	printf("min = %d\n", min);
+*/
+ 	// min = get_efficiency_2(set, lem->ants, lem->p_head);
+	// printf("min 2 = %d\n", min);
 	// while (1)
 	// {
 	// 	holder = make_best_set(set_n, lem);
@@ -127,5 +124,6 @@ int		choose_paths(t_main *lem)
 	// 	else
 	// 		return (1);
 	// }
+
 	return (0);
 }

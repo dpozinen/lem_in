@@ -12,25 +12,25 @@
 
 #include "lem_in.h"
 
-void	add_link(t_main *lem, char *line)
+static void	add_link(t_main *lem, char *line)
 {
 	int		i;
 	int		j;
 
 	if (!lem->room_matrix)
 		SHUTLEMLINE((lem->room_matrix = make_matrix(lem)));
-	i = get_room_index(lem->r_head, get_room_name(line, '-'));
+	i = get_room_index(lem->r_head, make_room_name(line, '-'));
 	j = get_room_index(lem->r_head, (line + get_char_index(line, '-') + 1));
 	lem->room_matrix[i][j] = 1;
 	lem->room_matrix[j][i] = 1;
 }
 
-void	add_room(t_main *lem, char *line)
+static void	add_room(t_main *lem, char *line)
 {
 	t_room	*t;
 	char	*room_name;
 
-	SHUTLEMLINE((room_name = get_room_name(line, ' ')));
+	SHUTLEMLINE((room_name = make_room_name(line, ' ')));
 	if (!lem->r_head)
 	{
 		SHUTLEMLINE((lem->r_head = make_room_list(lem, room_name)));
@@ -48,7 +48,7 @@ void	add_room(t_main *lem, char *line)
 	lem->rooms++;
 }
 
-void	add_command(char *line, t_main *lem)
+static void	add_command(char *line, t_main *lem)
 {
 	int f;
 
@@ -63,18 +63,18 @@ void	add_command(char *line, t_main *lem)
 	SHUTLEMLINE(validate_as_room(line));
 	if (f == 1)
 	{
-		lem->start = ft_strdup(get_room_name(line, ' '));
+		lem->start = ft_strdup(make_room_name(line, ' '));
 		lem->istart = lem->rooms;
 	}
 	else
 	{
-		lem->end = ft_strdup(get_room_name(line, ' '));
+		lem->end = ft_strdup(make_room_name(line, ' '));
 		lem->iend = lem->rooms;
 	}
 	add_room(lem, line);
 }
 
-int		read_input(t_main *lem)
+int			read_input(t_main *lem)
 {
 	char	*line;
 
@@ -95,16 +95,5 @@ int		read_input(t_main *lem)
 			break ; //shutdown(lem, line);
 		free(line);
 	}
-
-	// print_room_list(lem->r_head);
-	// fprintf(stderr, "start = %s, end = %s\n", lem->start, lem->end);
-	// fprintf(stderr, "istart = %d, iend = %d\n", lem->istart, lem->iend);
-	// for (int i = 0; i < lem->rooms; i++)
-	// {	
-	// 	for (int j = 0; j < lem->rooms; j++)
-	// 		printf("%d ", lem->room_matrix[i][j]);
-	// 	printf("\n");
-	// }
-
 	return (1);
 }

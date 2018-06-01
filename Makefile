@@ -10,8 +10,9 @@
 #                                                                              #
 #******************************************************************************#
 
-LEMSRC =	read.c find_path.c choose_path.c \
-			tools_1.c main.c tools_2.c tools_3.c tools_4.c
+LEMSRC =	main.c read.c find_path.c choose_path.c path_functions.c \
+			validation_functions.c room_functions.c int_array_functions.c \
+			boot_n_shut.c tools_1.c 
 OBJDIR = objects
 FLAGS = -Wall -Werror -Wextra
 

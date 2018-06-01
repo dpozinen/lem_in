@@ -18,8 +18,8 @@ int		main(void)
 
 	MALCHK((lem = boot_struct()));
 	read_input(lem);
-	printf("im out\n");
-	execute(lem);
+	pathfinder(lem);
+	choose_paths(lem);
 	// shutdown(lem, 0);
 	// printf("%d", ft_atoi("01));
 	return (0);

@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_2.c                                          :+:      :+:    :+:   */
+/*   room_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpozinen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/17 13:58:14 by dpozinen          #+#    #+#             */
-/*   Updated: 2018/05/17 13:58:14 by dpozinen         ###   ########.fr       */
+/*   Created: 2018/06/01 16:18:58 by dpozinen          #+#    #+#             */
+/*   Updated: 2018/06/01 16:18:58 by dpozinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-char	*get_room_name(char *line, char c)
+char	*get_room_name(t_room *p_head, int index)
+{
+	while (p_head)
+	{
+		if (p_head->index == index)
+			return (p_head->name);
+		p_head = p_head->next;
+	}
+	return (0);
+}
+
+char	*make_room_name(char *line, char c)
 {
 	char	*room_name;
 	int		size;
@@ -27,7 +38,7 @@ void	print_room_list(t_room *r_head)
 {
 	while (r_head)
 	{
-		fprintf(stderr, "name = {%s}; ind = %d\n\n", r_head->name, r_head->index);
+		printf("name = {%s}; ind = %d\n\n", r_head->name, r_head->index);
 		r_head = r_head->next;
 	}
 }
@@ -43,42 +54,13 @@ t_room	*make_room_list(t_main *lem, char *line)
 	return (t);
 }
 
-char	*ft_strchut(char *line, char c)
+int		get_room_index(t_room *r_head, char *line)
 {
-	char	*ret;
-	int		i;
-	int		size;
-
-	size = get_char_index(line, c);
-	if(!(ret = ft_strnew(size + 1)))
-		return (0);
-	i = 0;
-	while (i < size)
+	while (r_head)
 	{
-		ret[i] = line[i];
-		i++;
+		if (!ft_strcmp(line, r_head->name))
+			return (r_head->index);
+		r_head = r_head->next;
 	}
-	return (ret);
-}
-
-int		**make_matrix(t_main *lem)
-{
-	int	**matrix;
-	int i;
-	int	j;
-
-	MALCHK((matrix = (int**)malloc(sizeof(int*) * lem->rooms)));
-	i = 0;
-	while (i < lem->rooms)
-	{
-		MALCHK((matrix[i] = (int*)malloc(sizeof(int) * lem->rooms)));
-		j = 0;
-		while (j < lem->rooms)
-		{
-			matrix[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	return (matrix);
+	return (-1);
 }

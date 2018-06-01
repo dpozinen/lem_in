@@ -1,104 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   tools_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpozinen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/15 16:11:34 by dpozinen          #+#    #+#             */
-/*   Updated: 2018/05/15 16:11:34 by dpozinen         ###   ########.fr       */
+/*   Created: 2018/05/17 13:58:14 by dpozinen          #+#    #+#             */
+/*   Updated: 2018/05/17 13:58:14 by dpozinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_main	*boot_struct(void)
+int		max_3(int a, int b, int c)
 {
-	t_main *lem;
-
-	MALCHK((lem = (t_main*)malloc(sizeof(t_main))));
-	lem->start = 0;
-	lem->end = 0;
-	lem->room_matrix = 0;
-	lem->r_head = 0;
-	lem->p_head = 0;
-	lem->rooms = 0;
-	lem->paths = 0;
-	MALCHK((lem->input_s = ft_strnew(1)));
-	return (lem);
+	if (a >= b)
+		if (a >= c)
+			return (a);
+	if (b >= a)
+		if (b >= c)
+			return (b);
+	return (c);
 }
 
-void	shutdown(t_main *lem, char *line)//TODO: free int array
+char	*ft_strchut(char *line, char c)
 {
-	t_room *t;
+	char	*ret;
+	int		i;
+	int		size;
 
-	if (lem)
-	{
-		if (lem->start)
-			free(lem->start);
-		if (lem->end)
-			free(lem->end);
-	}
-	while (lem->r_head)
-	{
-		t = lem->r_head->next;
-		free(lem->r_head->name);
-		free(lem->r_head);
-		lem->r_head = t;
-	}
-	free(lem);
-	if (line)
-		free(line);
-	ft_printf("ERROR\n");
-	exit(0);
-}
-
-int		validate_as_int(char *line)
-{
-	while (*line)
-	{
-		if (!ft_isdigit(*line))
-			return (0);
-		line++;
-	}
-	return (1);
-}
-
-int		validate_as_room(char *line)
-{
-	int i;
-	int	spaces;
-
-	MALCHK(*line);
-	MALCHK((*line != 'L'));
-	i = get_char_index(line, ' ') + 1;
-	spaces = 1;
-	if (!ft_isdigit(line[i]))
+	size = get_char_index(line, c);
+	if (!(ret = ft_strnew(size + 1)))
 		return (0);
-	while (line[i])
+	i = 0;
+	while (i < size)
 	{
-		if (!ft_isdigit(line[i]) && line[i] != ' ')
-			return (0);
-		line[i] == ' ' ? spaces++ : 0;
+		ret[i] = line[i];
 		i++;
 	}
-	if (spaces != 2)
-		return (0);
-	return (1);
+	return (ret);
 }
 
-int		validate_as_link(char *line, t_main *lem)
+int		**make_matrix(t_main *lem)
 {
-	if (get_room_index(lem->r_head, get_room_name(line, '-')) == -1)
-		return (0);
-	if (!*line)
-		return (0);
-	while (*line && *line != '-')
-		line++;
-	line++;
-	if (get_room_index(lem->r_head, line) == -1)
-		return (0);
-	
-	return (1);
-}
+	int	**matrix;
+	int i;
+	int	j;
 
+	MALCHK((matrix = (int**)malloc(sizeof(int*) * lem->rooms)));
+	i = 0;
+	while (i < lem->rooms)
+	{
+		MALCHK((matrix[i] = (int*)malloc(sizeof(int) * lem->rooms)));
+		j = 0;
+		while (j < lem->rooms)
+		{
+			matrix[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+	return (matrix);
+}

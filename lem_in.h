@@ -53,26 +53,68 @@ typedef struct		s_main
 	t_path			*p_head;
 }					t_main;
 
-void		shutdown(t_main *lem, char *line);//TODO: free int array
-t_main		*boot_struct();
-void		print_room_list(t_room *r_head);
-t_room		*make_room_list(t_main *lem, char *line);
-int			**make_matrix(t_main *lem);
-char		*get_room_name(char *line, char c);
-int			get_room_index(t_room *r_head, char *line);
-int			*init_path(int size);
-void		remove_point(int i, int *current_path, int size);
-int			*intdup(int *arr, int size);
-int			count_path_length(int *arr, int size);
-int			find_int_in_arr(int i, int *arr, int size);
-void		add_point(int i, int *current_path, int size);
-char		*find_room_name(t_room *p_head, int index);
+/*
+* tools_1.c ▽
+*/
+int					max_3(int a, int b, int c);
+char				*ft_strchut(char *line, char c);
+int					**make_matrix(t_main *lem);
 
-int			validate_as_int(char *line);
-int			validate_as_room(char *line);
-int			validate_as_link(char *line, t_main *lem);
+/*
+* validation_functions.c ▽
+*/
+int		validate_as_int(char *line);
+int		validate_as_room(char *line);
+int		validate_as_link(char *line, t_main *lem);
 
+/*
+* room_functions.c ▽
+*/
+char	*get_room_name(t_room *p_head, int index);
+char	*make_room_name(char *line, char c);
+void	print_room_list(t_room *r_head);
+t_room	*make_room_list(t_main *lem, char *line);
+int		get_room_index(t_room *r_head, char *line);
+
+/*
+* read.c ▽
+*/
 int			read_input(t_main *lem);
-int			execute(t_main *lem);
+
+/*
+* path_functions.c ▽
+*/
+int		get_min_path(t_path *path);
+int		get_path_length(t_path *path, int name);
+int		check_other_paths(int *arr, int worst, int size);
+int		count_path_length(int *arr, int size);
+int		*get_set_lengths(int *set, int n_of_paths, t_path *path);
+
+/*
+* int_array_functions.c ▽
+*/
+int		*make_int_arr(int size, int num);
+int		find_int_in_arr(int i, int *arr, int size);
+int		intersect(int *arr1, int *arr2, int size, int end);
+int		max_int_arr(int *arr, int size);
+int		sum_int_array(int *array, int size);
+int		find_min_index(int *arr, int size);
+int		*intdup(int *arr, int size);
+
+/*
+* find_path.c ▽
+*/
+int			pathfinder(t_main *lem);
+
+/*
+* choose_path.c ▽
+*/
 int			choose_paths(t_main *lem);
+
+/*
+* boot_n_shut.c ▽
+*/
+t_main	*boot_struct(void);
+void	shutdown(t_main *lem, char *line);
+
 #endif
