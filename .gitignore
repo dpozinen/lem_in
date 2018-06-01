@@ -4,8 +4,8 @@
 *test
 .vscode
 objects
-lem_in
-lem_in_debug
+lem-in
+lem-in_debug
 
 # Prerequisites
 *.d
