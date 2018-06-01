@@ -86,9 +86,20 @@ int			get_efficiency(int *lengths, int n_of_paths, t_main *lem)
 	return (max_int_arr(lengths, n_of_paths));
 }
 
-// int			make_best_set(t_main *lem)
+// int			make_best_set(t_main *lem, int set_n)
 // {
+	t_room *room;
+	int	i;
+	int	min;
+	int	*current_path;
 
+	/*add first path; 
+	if (found_path is last)
+		return ;
+	else if (more paths to find left)
+		begin = lem->istart;
+		call self again;*/
+	make_set(&min, current_path, lem); 
 // 	return (0);
 // }
 
