@@ -40,13 +40,13 @@ typedef struct		s_room
 typedef struct		s_main
 {
 	int				paths;
-	unsigned int	ants;
+	int				ants;
 	char			*input_s;
-	char			*start;
 	int				istart;
-	char			*end;
 	int				iend;
-	int				best_result;
+	int				eff;
+	int				*best_set;
+	int				*best_set_ants;
 	int				rooms;
 	int				**room_matrix;
 	t_room			*r_head;
@@ -73,8 +73,8 @@ int		validate_as_link(char *line, t_main *lem);
 char	*get_room_name(t_room *p_head, int index);
 char	*make_room_name(char *line, char c);
 void	print_room_list(t_room *r_head);
-t_room	*make_room_list(t_main *lem, char *line);
 int		get_room_index(t_room *r_head, char *line);
+t_room	*make_room_list(t_main *lem, char *line);
 
 /*
 * read.c ▽
@@ -86,7 +86,7 @@ int			read_input(t_main *lem);
 */
 int		get_min_path(t_path *path);
 int		get_path_length(t_path *path, int name);
-int		check_other_paths(int *arr, int worst, int size);
+int		check_other_paths(int *arr, int worst, int size, int n_of_paths);
 int		count_path_length(int *arr, int size);
 int		*get_set_lengths(int *set, int n_of_paths, t_path *path);
 
@@ -95,7 +95,7 @@ int		*get_set_lengths(int *set, int n_of_paths, t_path *path);
 */
 int		*make_int_arr(int size, int num);
 int		find_int_in_arr(int i, int *arr, int size);
-int		intersect(int *arr1, int *arr2, int size, int end);
+int		intersect(int *arr1, int *arr2, int size1, int size2);
 int		max_int_arr(int *arr, int size);
 int		sum_int_array(int *array, int size);
 int		find_min_index(int *arr, int size);
@@ -105,6 +105,7 @@ int		*intdup(int *arr, int size);
 * find_path.c ▽
 */
 int			pathfinder(t_main *lem);
+void		add_point(int i, int *current_path, int size);
 
 /*
 * choose_path.c ▽
@@ -114,7 +115,7 @@ int			choose_paths(t_main *lem);
 /*
 * boot_n_shut.c ▽
 */
-t_main	*boot_struct(void);
 void	shutdown(t_main *lem, char *line);
+t_main	*boot_struct(void);
 
 #endif

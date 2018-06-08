@@ -16,10 +16,13 @@ static void	add_link(t_main *lem, char *line)
 {
 	int		i;
 	int		j;
+	char	*room_name;
 
 	if (!lem->room_matrix)
 		SHUTLEMLINE((lem->room_matrix = make_matrix(lem)));
-	i = get_room_index(lem->r_head, make_room_name(line, '-'));
+	room_name = make_room_name(line, '-');
+	i = get_room_index(lem->r_head, room_name);
+	free(room_name);
 	j = get_room_index(lem->r_head, (line + get_char_index(line, '-') + 1));
 	lem->room_matrix[i][j] = 1;
 	lem->room_matrix[j][i] = 1;
@@ -50,7 +53,7 @@ static void	add_room(t_main *lem, char *line)
 
 static void	add_command(char *line, t_main *lem)
 {
-	int f;
+	int		f;
 
 	f = 0;
 	if (!ft_strcmp("##start", line))
@@ -62,16 +65,11 @@ static void	add_command(char *line, t_main *lem)
 	get_next_line(0, &line);
 	SHUTLEMLINE(validate_as_room(line));
 	if (f == 1)
-	{
-		lem->start = ft_strdup(make_room_name(line, ' '));
 		lem->istart = lem->rooms;
-	}
 	else
-	{
-		lem->end = ft_strdup(make_room_name(line, ' '));
 		lem->iend = lem->rooms;
-	}
 	add_room(lem, line);
+	free(line);
 }
 
 int			read_input(t_main *lem)
@@ -84,7 +82,7 @@ int			read_input(t_main *lem)
 	free(line);
 	while (get_next_line(0, &line))
 	{
-		MALCHK((lem->input_s = free_n_join(lem->input_s, line, 1)));
+		// MALCHK((lem->input_s = free_n_join(lem->input_s, line, 1)));
 		if (*line == '#')
 			add_command(line, lem);
 		else if (validate_as_room(line))
@@ -92,7 +90,7 @@ int			read_input(t_main *lem)
 		else if (validate_as_link(line, lem))
 			add_link(lem, line);
 		else
-			break ; //shutdown(lem, line);
+		 	break ; //shutdown(lem, line);
 		free(line);
 	}
 	return (1);

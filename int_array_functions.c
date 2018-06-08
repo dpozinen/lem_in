@@ -41,14 +41,14 @@ int		find_int_in_arr(int i, int *arr, int size)
 	return (0);
 }
 
-int		intersect(int *arr1, int *arr2, int size, int end)
+int		intersect(int *arr1, int *arr2, int size1, int size2)
 {
 	int i;
 
 	i = 1;
-	while (i < size)
+	while (i < size1)
 	{
-		if (find_int_in_arr(arr1[i], arr2, size) && arr1[i] != end)
+		if (find_int_in_arr(arr1[i], arr2, size2))
 			return (1);
 		i++;
 	}

@@ -49,7 +49,7 @@ t_room	*make_room_list(t_main *lem, char *line)
 
 	MALCHK((t = (t_room*)malloc(sizeof(t_room))));
 	t->index = lem->rooms;
-	t->name = ft_strdup(line);
+	t->name = line;
 	t->next = 0;
 	return (t);
 }

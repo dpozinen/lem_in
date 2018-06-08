@@ -37,7 +37,7 @@ int		get_path_length(t_path *path, int name)
 	return (0);
 }
 
-int		check_other_paths(int *arr, int worst, int size)
+int		check_other_paths(int *arr, int worst, int size, int n_of_paths)
 {
 	int i;
 	int c;
@@ -48,7 +48,7 @@ int		check_other_paths(int *arr, int worst, int size)
 	{
 		if (arr[i] >= worst)
 			c++;
-		if (c >= 2)
+		if ((c >= 2 && n_of_paths >= 2) || (c == 1 && n_of_paths == 1))
 			return (1);
 		i++;
 	}

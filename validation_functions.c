@@ -46,10 +46,17 @@ int		validate_as_room(char *line)
 
 int		validate_as_link(char *line, t_main *lem)
 {
+	char *room_name;
+
 	if (!*line)
 		return (0);
-	if (get_room_index(lem->r_head, make_room_name(line, '-')) == -1)
+	room_name = make_room_name(line, '-');
+	if (get_room_index(lem->r_head, room_name) == -1)
+	{
+		free(room_name);
 		return (0);
+	}
+	free(room_name);
 	while (*line && *line != '-')
 		line++;
 	line++;

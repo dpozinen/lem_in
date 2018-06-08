@@ -50,7 +50,7 @@ fclean: clean
 re: fclean all
 
 go: $(NAME)
-	./$(NAME) test
+	./$(NAME) < test
 
 d: make_lib $(OBJDIR) $(LEMOBJ)
 	@ar rc $(LEMLIBNAME) $(LEMOBJ)
