@@ -12,7 +12,7 @@
 
 LEMSRC =	main.c read.c find_path.c choose_path.c path_functions.c \
 			validation_functions.c room_functions.c int_array_functions.c \
-			boot_n_shut.c tools_1.c 
+			boot_n_shut.c tools_1.c intersect.c
 OBJDIR = objects
 FLAGS = -Wall -Werror -Wextra
 

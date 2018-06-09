@@ -82,7 +82,8 @@ int			read_input(t_main *lem)
 	free(line);
 	while (get_next_line(0, &line))
 	{
-		// MALCHK((lem->input_s = free_n_join(lem->input_s, line, 1)));
+		MALCHK((lem->input_s =
+				free_n_join(lem->input_s, ft_strjoin(line, "\n"), 3)));
 		if (*line == '#')
 			add_command(line, lem);
 		else if (validate_as_room(line))
@@ -90,7 +91,7 @@ int			read_input(t_main *lem)
 		else if (validate_as_link(line, lem))
 			add_link(lem, line);
 		else
-		 	break ; //shutdown(lem, line);
+			break ;
 		free(line);
 	}
 	return (1);

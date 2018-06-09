@@ -12,18 +12,15 @@
 
 #include "lem_in.h"
 
-int		get_min_path(t_path *path)
+t_path	*get_path(t_path *path, int name)
 {
-	int min;
-
-	min = path->length;
 	while (path)
 	{
-		if (min > path->length)
-			min = path->length;
+		if (name == path->name)
+			return (path);
 		path = path->next;
 	}
-	return (min);
+	return (0);
 }
 
 int		get_path_length(t_path *path, int name)

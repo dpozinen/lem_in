@@ -72,7 +72,7 @@ int		validate_as_link(char *line, t_main *lem);
 */
 char	*get_room_name(t_room *p_head, int index);
 char	*make_room_name(char *line, char c);
-void	print_room_list(t_room *r_head);
+void	print_all_paths(t_path *path, t_room *r_head);
 int		get_room_index(t_room *r_head, char *line);
 t_room	*make_room_list(t_main *lem, char *line);
 
@@ -84,11 +84,11 @@ int			read_input(t_main *lem);
 /*
 * path_functions.c ▽
 */
-int		get_min_path(t_path *path);
 int		get_path_length(t_path *path, int name);
 int		check_other_paths(int *arr, int worst, int size, int n_of_paths);
 int		count_path_length(int *arr, int size);
 int		*get_set_lengths(int *set, int n_of_paths, t_path *path);
+t_path	*get_path(t_path *path, int name);
 
 /*
 * int_array_functions.c ▽
@@ -117,5 +117,12 @@ int			choose_paths(t_main *lem);
 */
 void	shutdown(t_main *lem, char *line);
 t_main	*boot_struct(void);
+
+/*
+* intersect.c ▽
+*/
+int		set_intersect(int *path_names, int set_n, t_main *lem);
+int		get_efficiency(int *lengths, int n_of_paths, int ants, int *path_congestion);
+
 
 #endif

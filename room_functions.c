@@ -34,13 +34,25 @@ char	*make_room_name(char *line, char c)
 	return (room_name);
 }
 
-void	print_room_list(t_room *r_head)
+void	print_all_paths(t_path *path, t_room *r_head)
 {
-	while (r_head)
+	char	*room_name;
+	int		i;
+
+	while (path)
 	{
-		printf("name = {%s}; ind = %d\n\n", r_head->name, r_head->index);
-		r_head = r_head->next;
+		i = 0;
+		ft_printf("path name: %2d | path: ", path->name);
+		while (i < path->length)
+		{
+			room_name = get_room_name(r_head, path->path[i]);
+			room_name ? ft_printf("%s ", room_name) : 0;
+			i++;
+		}
+		ft_printf("\n");
+		path = path->next;
 	}
+	ft_printf("\n");
 }
 
 t_room	*make_room_list(t_main *lem, char *line)

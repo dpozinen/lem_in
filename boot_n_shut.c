@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_main	*boot_struct(void)//TODO: null where necessary
+t_main		*boot_struct(void)
 {
 	t_main *lem;
 
@@ -29,32 +29,36 @@ t_main	*boot_struct(void)//TODO: null where necessary
 	return (lem);
 }
 
-void	shutdown(t_main *lem, char *line)
+static void	free_rooms_paths(t_path *path, t_room *room)
 {
 	t_room	*r;
 	t_path	*p;
-	int		i;
 
+	while (room)
+	{
+		r = room->next;
+		free(room->name);
+		free(room);
+		room = r;
+	}
+	while (path)
+	{
+		p = path->next;
+		free(path->path);
+		free(path);
+		path = p;
+	}
+}
+
+void		shutdown(t_main *lem, char *line)
+{
+	int		i;
 
 	free(lem->input_s);
 	free(lem->best_set);
 	free(lem->best_set_ants);
-	while (lem->r_head)
-	{
-		r = lem->r_head->next;
-
-		free(lem->r_head->name);
-		free(lem->r_head);
-		lem->r_head = r;
-	}
-	while (lem->p_head)
-	{
-		p = lem->p_head->next;
-		free(lem->p_head->path);
-		free(lem->p_head);
-		lem->p_head = p;
-	}
 	i = 0;
+	free_rooms_paths(lem->p_head, lem->r_head);
 	while (i < lem->rooms)
 	{
 		free(lem->room_matrix[i]);

@@ -53,7 +53,6 @@ int			add_path_to_list(int *current_path, t_main *lem)
 	path->name = (lem->p_head ? lem->p_head->name + 1 : 0);
 	path->length = count_path_length(current_path, lem->rooms);
 	path->next = 0;
-	printf("path name = %2d.		",path->name);
 	if (!lem->p_head)
 	{
 		lem->p_head = path;
@@ -68,24 +67,18 @@ int			add_path_to_list(int *current_path, t_main *lem)
 static void	find_paths(int cur, int *current_path, t_main *lem)
 {
 	int i;
-	// char *room_name;
 
 	if (cur == lem->iend)
 	{
 		add_path_to_list(current_path, lem);
 		lem->paths++;
-/*   		for (int i = 0; i < lem->rooms; i++)
-		{
-			room_name = get_room_name(lem->r_head, current_path[i]);
-			room_name ? printf("%s ", room_name) : 0;
-		}
-		printf("\n");  */
 		return ;
 	}
-	i = 0; 
+	i = 0;
 	while (i < lem->rooms)
 	{
-		if (lem->room_matrix[cur][i] == 1 && !find_int_in_arr(i, current_path, lem->rooms))
+		if (lem->room_matrix[cur][i] == 1 &&
+			!find_int_in_arr(i, current_path, lem->rooms))
 		{
 			add_point(i, current_path, lem->rooms);
 			find_paths(i, current_path, lem);
@@ -102,7 +95,7 @@ int			pathfinder(t_main *lem)
 	MALCHK((current_path = make_int_arr(lem->rooms, -1)));
 	current_path[0] = lem->istart;
 	find_paths(lem->istart, current_path, lem);
-	// printf("here\n");
+	print_all_paths(lem->p_head, lem->r_head);
 	free(current_path);
 	return (0);
 }
