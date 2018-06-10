@@ -83,12 +83,12 @@ int			set_intersect(int *path_names, int set_n, t_main *lem)
 	set = 0;
 	while (set < set_n)
 	{
-		path = get_path(lem->p_head, path_names[set]);
+		path = get_path(lem->p_head, path_names[set]);//check null
 		if (!fill_path_rooms(room_arr, path, lem->istart, lem->iend))
-			{
-				free(room_arr);
-				return (1);
-			}
+		{
+			free(room_arr);
+			return (1);
+		}
 		set++;
 	}
 	free(room_arr);

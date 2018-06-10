@@ -25,14 +25,22 @@ static int	put_in_order(int *paths, int size, int i, int n_of_paths)
 	return (1);
 }
 
-int			save_best_set(int *paths, int set_n, t_main *lem)
+int			save_best_set(int *paths, int set_n, t_main *lem, int *best_sum)
 {
 	int		eff;
 	int		*path_congestion;
 	int		*lengths;
+	int		t_sum;
 
 	eff = 0;
 	MALCHK((lengths = get_set_lengths(paths, set_n, lem->p_head)));
+	// if (lengths[0] == 1)
+	// 	printf("111\n");
+	t_sum = sum_int_array(lengths, set_n);
+	t_sum > *best_sum ? free(lengths) : 0;
+	if (t_sum > *best_sum)
+		return (0);
+	*best_sum = t_sum;
 	SHUTLEM((path_congestion = make_int_arr(set_n, 1)));
 	MALCHK((eff = get_efficiency(lengths, set_n, lem->ants, path_congestion)));
 	if (lem->eff >= eff)
@@ -48,32 +56,64 @@ int			save_best_set(int *paths, int set_n, t_main *lem)
 	return (lem->eff >= eff);
 }
 
+int			traverse_end(int set_n, int paths)
+{
+	int i;
+	int sum;
+
+	i = 0;
+	sum = 0;
+	while (i < set_n)
+	{
+		sum += paths;
+		paths--;
+		i++;
+	}
+	// printf("sum = %d\n", sum);
+	return (sum);
+
+}
+
 int			traverse_all_paths(int set_n, t_main *lem, int *paths)
 {
 	int i;
 	int f;
 	int	best_sum;
-	int t_sum;
 
 	best_sum = INT_MAX;
 	f = 0;
-	while ((t_sum = sum_int_array(paths, set_n)) != (lem->paths - 1) * set_n)
+	while (sum_int_array(paths, set_n) <= traverse_end(set_n, lem->paths - 1))
 	{
-		if (!set_intersect(paths, set_n, lem) && t_sum < best_sum &&
-							(f += save_best_set(paths, set_n, lem)))
-			best_sum = t_sum;
+		if (!set_intersect(paths, set_n, lem))
+			f += save_best_set(paths, set_n, lem, &best_sum);
 		i = 0;
 		while (i < set_n)
 		{
-			if (paths[i] == (lem->paths - 1) &&
+			if (paths[i] == (lem->paths - 1) && set_n != 1 &&
 				put_in_order(paths, set_n, i, lem->paths - 1))
 				break ;
-			else if (i == set_n - 1 && paths[i] < lem->paths - 1)
+			else if (i == set_n - 1 && paths[i] <= lem->paths - 1)
 				paths[i]++;
 			i++;
 		}
 	}
 	return (f);
+}
+
+void printf_found(int set_n, t_main *lem)
+{
+	ft_printf("%d\n", set_n);
+	set_n++;
+	ft_printf("eff = %d\n", lem->eff);
+	ft_printf("ant : ");
+	for (int i = 0; i < set_n - 1; i++)
+		ft_printf("%d ", lem->best_set_ants[i]);
+	ft_printf("\n");
+	ft_printf("set : ");
+	for (int i = 0; i < set_n - 1; i++)
+		ft_printf("%d ", lem->best_set[i]);
+	ft_printf("\n");
+	ft_printf("\n");
 }
 
 int			choose_paths(t_main *lem)
@@ -84,33 +124,19 @@ int			choose_paths(t_main *lem)
 
 	set_n = 1;
 	paths = make_int_arr(set_n, -1);
-	i = 0;
-	while (i < set_n)
-	{
+	i = -1;
+	while (++i < set_n)
 		paths[i] = i;
-		i++;
-	}
-	while (traverse_all_paths(set_n, lem, paths) && set_n < 5)
-	{
+	while (traverse_all_paths(set_n, lem, paths) && set_n < lem->paths - 1)
+ 	{
+		// TODO while lengths less than ants
+		printf_found(set_n, lem);
 		set_n++;
-/* 		ft_printf("%d\n", set_n);
-		ft_printf("eff = %d\n", lem->eff);
-		for (int i = 0; i < set_n - 1; i++)
-			ft_printf("%d ", lem->best_set_ants[i]);
-		ft_printf("\n");
-		for (int i = 0; i < set_n - 1; i++)
-		 	ft_printf("%d ", lem->best_set[i]);
-		ft_printf("\n");
-*/
 		free(paths);
 		paths = make_int_arr(set_n, -1);
-		i = 0;
-		while (i < set_n)
-		{
+		i = -1;
+		while (++i < set_n)
 			paths[i] = i;
-			i++;
-		}
-		ft_printf("\n");
 	}
 	free(paths);
 	return (0);

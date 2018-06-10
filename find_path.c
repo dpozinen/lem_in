@@ -71,6 +71,7 @@ static void	find_paths(int cur, int *current_path, t_main *lem)
 	if (cur == lem->iend)
 	{
 		add_path_to_list(current_path, lem);
+		printf("paths = %10d\n", lem->paths);
 		lem->paths++;
 		return ;
 	}
@@ -95,7 +96,6 @@ int			pathfinder(t_main *lem)
 	MALCHK((current_path = make_int_arr(lem->rooms, -1)));
 	current_path[0] = lem->istart;
 	find_paths(lem->istart, current_path, lem);
-	print_all_paths(lem->p_head, lem->r_head);
 	free(current_path);
-	return (0);
+	return (1);
 }

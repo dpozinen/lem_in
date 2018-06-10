@@ -54,18 +54,12 @@ int		check_other_paths(int *arr, int worst, int size, int n_of_paths)
 
 int		count_path_length(int *arr, int size)
 {
-	int c;
 	int i;
 
 	i = 0;
-	c = 0;
-	while (i < size)
-	{
-		if (arr[i] != -1)
-			c++;
+	while (arr[i] != -1 && i < size)
 		i++;
-	}
-	return (c - 1);
+	return (i - 1);
 }
 
 int		*get_set_lengths(int *set, int n_of_paths, t_path *path)

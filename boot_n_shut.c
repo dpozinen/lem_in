@@ -50,7 +50,7 @@ static void	free_rooms_paths(t_path *path, t_room *room)
 	}
 }
 
-void		shutdown(t_main *lem, char *line)
+void		shutdown(t_main *lem, char *line, int f)
 {
 	int		i;
 
@@ -68,6 +68,9 @@ void		shutdown(t_main *lem, char *line)
 	free(lem);
 	if (line)
 		free(line);
-	ft_printf("ERROR\n");
-	// exit(0);
+	if (f)
+	{
+		ft_printf("ERROR\n");
+		exit(0);
+	}
 }

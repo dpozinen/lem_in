@@ -18,9 +18,9 @@ int		main(void)
 
 	MALCHK((lem = boot_struct()));
 	read_input(lem);
-	pathfinder(lem);
+	MALCHK(pathfinder(lem));
 	choose_paths(lem);
-	shutdown(lem, 0);
+	shutdown(lem, 0, 0);
 	system("leaks lem-in");
 	return (0);
 }

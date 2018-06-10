@@ -43,10 +43,10 @@ void	print_all_paths(t_path *path, t_room *r_head)
 	{
 		i = 0;
 		ft_printf("path name: %2d | path: ", path->name);
-		while (i < path->length)
+		while (i < path->length + 1)
 		{
 			room_name = get_room_name(r_head, path->path[i]);
-			room_name ? ft_printf("%s ", room_name) : 0;
+			ft_printf("%s ", room_name);
 			i++;
 		}
 		ft_printf("\n");

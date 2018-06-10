@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 
-# define SHUTLEM(x) if (!x) shutdown(lem, 0);
-# define SHUTLEMLINE(x) if (!x) shutdown(lem, line);
+# define SHUTLEM(x) if (!x) shutdown(lem, 0, 1);
+# define SHUTLEMLINE(x) if (!x) shutdown(lem, line, 1);
 
 typedef struct		s_path
 {
@@ -115,7 +115,7 @@ int			choose_paths(t_main *lem);
 /*
 * boot_n_shut.c ▽
 */
-void	shutdown(t_main *lem, char *line);
+void	shutdown(t_main *lem, char *line, int f);
 t_main	*boot_struct(void);
 
 /*

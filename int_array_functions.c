@@ -72,27 +72,6 @@ int		sum_int_array(int *array, int size)
 	return (sum);
 }
 
-int		find_min_index(int *arr, int size)
-{
-	int i;
-	int min_index;
-	int min;
-
-	i = 0;
-	min_index = 0;
-	min = arr[0];
-	while (i < size)
-	{
-		if (arr[i] < min)
-		{
-			min = arr[i];
-			min_index = i;
-		}
-		i++;
-	}
-	return (min_index);
-}
-
 int		*intdup(int *arr, int size)
 {
 	int *ret;
