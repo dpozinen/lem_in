@@ -45,6 +45,7 @@ typedef struct		s_main
 	int				istart;
 	int				iend;
 	int				eff;
+	int				*temp_best_set;
 	int				*best_set;
 	int				*best_set_ants;
 	int				rooms;

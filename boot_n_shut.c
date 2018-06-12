@@ -24,6 +24,7 @@ t_main		*boot_struct(void)
 	lem->paths = 0;
 	lem->best_set = make_int_arr(1, 0);
 	lem->best_set_ants = make_int_arr(1, 0);
+	lem->temp_best_set = make_int_arr(1, 0);	
 	lem->eff = INT_MAX;
 	MALCHK((lem->input_s = ft_strnew(1)));
 	return (lem);
@@ -57,6 +58,7 @@ void		shutdown(t_main *lem, char *line, int f)
 	free(lem->input_s);
 	free(lem->best_set);
 	free(lem->best_set_ants);
+	free(lem->temp_best_set);	
 	i = 0;
 	free_rooms_paths(lem->p_head, lem->r_head);
 	while (i < lem->rooms)

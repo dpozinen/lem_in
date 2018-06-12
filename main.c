@@ -21,6 +21,6 @@ int		main(void)
 	MALCHK(pathfinder(lem));
 	choose_paths(lem);
 	shutdown(lem, 0, 0);
-	system("leaks lem-in");
+	// system("leaks lem-in");
 	return (0);
 }
