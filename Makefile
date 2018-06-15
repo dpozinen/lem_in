@@ -10,9 +10,9 @@
 #                                                                              #
 #******************************************************************************#
 
-LEMSRC =	main.c read.c find_path.c choose_path.c path_functions.c \
-			validation_functions.c room_functions.c int_array_functions.c \
-			boot_n_shut.c tools_1.c intersect.c
+LEMSRC =	main.c read.c find_path.c choose_path.c tools_path.c \
+			tools_validation.c tools_room.c tools_int_array.c \
+			boot_n_shut.c tools_1.c intersect.c extras.c tools_choose_path.c
 OBJDIR = objects
 FLAGS = -Wall -Werror -Wextra
 
@@ -41,7 +41,7 @@ clean:
 	@rm -rf $(OBJDIR)
 	@rm $(LEMLIBNAME)
 	@rm $(NAME)
-	@rm $(NAME)_debug
+	# @rm $(NAME)_debug
 
 fclean: clean
 	@make fclean -C libft

@@ -49,7 +49,7 @@ int			add_path_to_list(int *current_path, t_main *lem)
 	t_path	*path;
 
 	MALCHK((path = (t_path*)malloc(sizeof(t_path))));
-	path->path = intdup(current_path, lem->rooms);
+	MALCHK((path->path = intdup(current_path, lem->rooms)));
 	path->name = (lem->p_head ? lem->p_head->name + 1 : 0);
 	path->length = count_path_length(current_path, lem->rooms);
 	path->next = 0;
@@ -71,7 +71,6 @@ static void	find_paths(int cur, int *current_path, t_main *lem)
 	if (cur == lem->iend)
 	{
 		add_path_to_list(current_path, lem);
-		printf("paths = %10d\n", lem->paths);
 		lem->paths++;
 		return ;
 	}
@@ -93,9 +92,13 @@ int			pathfinder(t_main *lem)
 {
 	int		*current_path;
 
+	if (lem->ants == 0 || lem->iend == -1 || lem->istart == -1)
+		return (0);
 	MALCHK((current_path = make_int_arr(lem->rooms, -1)));
 	current_path[0] = lem->istart;
 	find_paths(lem->istart, current_path, lem);
 	free(current_path);
+	if (!lem->p_head || !lem->r_head)
+		return (0);
 	return (1);
 }

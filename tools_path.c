@@ -12,6 +12,22 @@
 
 #include "lem_in.h"
 
+t_path	**pathdup(t_path **path_arr, int size)
+{
+	t_path	**ret;
+	int		i;
+
+	MALCHK((ret = (t_path**)malloc(sizeof(t_path*) * (size + 1))));
+	ret[size] = 0;
+	i = 0;
+	while (i < size)
+	{
+		ret[i] = path_arr[i];
+		i++;
+	}
+	return (ret);
+}
+
 t_path	*get_path(t_path *path, int name)
 {
 	while (path)
@@ -23,33 +39,20 @@ t_path	*get_path(t_path *path, int name)
 	return (0);
 }
 
-int		get_path_length(t_path *path, int name)
+t_path	**get_paths_pointers(int *paths, int set_n, t_path *p_head)
 {
-	while (path)
-	{
-		if (name == path->name)
-			return (path->length);
-		path = path->next;
-	}
-	return (0);
-}
+	t_path	**ret;
+	int		i;
 
-int		check_other_paths(int *arr, int worst, int size, int n_of_paths)
-{
-	int i;
-	int c;
-
-	c = 0;
+	MALCHK((ret = (t_path**)malloc(sizeof(t_path*) * (set_n + 1))));
+	ret[set_n] = 0;
 	i = 0;
-	while (i < size)
+	while (i < set_n)
 	{
-		if (arr[i] >= worst)
-			c++;
-		if ((c >= 2 && n_of_paths >= 2) || (c == 1 && n_of_paths == 1))
-			return (1);
+		ret[i] = get_path(p_head, paths[i]);
 		i++;
 	}
-	return (0);
+	return (ret);
 }
 
 int		count_path_length(int *arr, int size)
@@ -62,16 +65,16 @@ int		count_path_length(int *arr, int size)
 	return (i - 1);
 }
 
-int		*get_set_lengths(int *set, int n_of_paths, t_path *path)
+int		*get_set_lengths(t_path **path_arr, int set_n)
 {
 	int	*lengths;
 	int	i;
 
-	MALCHK((lengths = make_int_arr(n_of_paths, 0)));
+	MALCHK((lengths = make_int_arr(set_n, 0)));
 	i = 0;
-	while (i < n_of_paths)
+	while (i < set_n)
 	{
-		lengths[i] = get_path_length(path, set[i]);
+		lengths[i] = (path_arr[i])->length;
 		i++;
 	}
 	return (lengths);

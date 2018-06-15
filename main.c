@@ -12,15 +12,19 @@
 
 #include "lem_in.h"
 
-int		main(void)
+int		main(int nargs, char **args)
 {
 	t_main *lem;
 
-	MALCHK((lem = boot_struct()));
+	if (nargs > 2)
+		return (0);
+	lem = boot_struct();
 	read_input(lem);
+	if (args[1])
+		lem->max_set_n = ft_atoi(args[1]);
 	MALCHK(pathfinder(lem));
 	choose_paths(lem);
 	shutdown(lem, 0, 0);
-	// system("leaks lem-in");
+	system("leaks lem-in");
 	return (0);
 }

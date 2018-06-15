@@ -12,6 +12,24 @@
 
 #include "lem_in.h"
 
+static int	check_other_paths(int *arr, int worst, int size, int n_of_paths)
+{
+	int i;
+	int c;
+
+	c = 0;
+	i = 0;
+	while (i < size)
+	{
+		if (arr[i] >= worst)
+			c++;
+		if ((c >= 2 && n_of_paths >= 2) || (c == 1 && n_of_paths == 1))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static void	increment(int *path_congestion, int *lengths)
 {
 	(*path_congestion)++;
@@ -71,7 +89,7 @@ static int	fill_path_rooms(int *room_arr, t_path *path, int start, int end)
 	return (1);
 }
 
-int			set_intersect(int *path_names, int set_n, t_main *lem)
+int			set_intersect(t_path **path_arr, int set_n, t_main *lem)
 {
 	int		*room_arr;
 	int		i;
@@ -83,7 +101,7 @@ int			set_intersect(int *path_names, int set_n, t_main *lem)
 	set = 0;
 	while (set < set_n)
 	{
-		path = get_path(lem->p_head, path_names[set]);//check null
+		path = path_arr[set];
 		if (!fill_path_rooms(room_arr, path, lem->istart, lem->iend))
 		{
 			free(room_arr);

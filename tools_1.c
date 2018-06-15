@@ -12,35 +12,6 @@
 
 #include "lem_in.h"
 
-int		max_3(int a, int b, int c)
-{
-	if (a >= b)
-		if (a >= c)
-			return (a);
-	if (b >= a)
-		if (b >= c)
-			return (b);
-	return (c);
-}
-
-char	*ft_strchut(char *line, char c)
-{
-	char	*ret;
-	int		i;
-	int		size;
-
-	size = get_char_index(line, c);
-	if (!(ret = ft_strnew(size + 1)))
-		return (0);
-	i = 0;
-	while (i < size)
-	{
-		ret[i] = line[i];
-		i++;
-	}
-	return (ret);
-}
-
 int		**make_matrix(t_main *lem)
 {
 	int	**matrix;

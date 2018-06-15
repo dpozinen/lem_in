@@ -39,14 +39,15 @@ typedef struct		s_room
 
 typedef struct		s_main
 {
+	int				max_set_n;
 	int				paths;
 	int				ants;
 	char			*input_s;
 	int				istart;
 	int				iend;
 	int				eff;
-	int				*temp_best_set;
-	int				*best_set;
+	t_path			**temp_best_set;
+	t_path			**best_set;
 	int				*best_set_ants;
 	int				rooms;
 	int				**room_matrix;
@@ -57,8 +58,6 @@ typedef struct		s_main
 /*
 * tools_1.c ▽
 */
-int					max_3(int a, int b, int c);
-char				*ft_strchut(char *line, char c);
 int					**make_matrix(t_main *lem);
 
 /*
@@ -85,11 +84,11 @@ int			read_input(t_main *lem);
 /*
 * path_functions.c ▽
 */
-int		get_path_length(t_path *path, int name);
-int		check_other_paths(int *arr, int worst, int size, int n_of_paths);
 int		count_path_length(int *arr, int size);
-int		*get_set_lengths(int *set, int n_of_paths, t_path *path);
+int		*get_set_lengths(t_path **path_arr, int n_of_paths);
 t_path	*get_path(t_path *path, int name);
+t_path	**get_paths_pointers(int *paths, int set_n, t_path *p_head);
+t_path	**pathdup(t_path **path_arr, int size);
 
 /*
 * int_array_functions.c ▽
@@ -113,6 +112,9 @@ void		add_point(int i, int *current_path, int size);
 */
 int			choose_paths(t_main *lem);
 
+int			traverse_all_paths(int set_n, t_main *lem, int *paths);
+int			save_best_set(t_path **path_arr, int set_n, t_main *lem);
+
 /*
 * boot_n_shut.c ▽
 */
@@ -122,8 +124,14 @@ t_main	*boot_struct(void);
 /*
 * intersect.c ▽
 */
-int		set_intersect(int *path_names, int set_n, t_main *lem);
+int		set_intersect(t_path **path_arr, int set_n, t_main *lem);
 int		get_efficiency(int *lengths, int n_of_paths, int ants, int *path_congestion);
+
+/*
+* extras.c ▽
+*/
+void	printf_found(int set_n, t_main *lem);
+void	print_all_paths(t_path *path, t_room *r_head);
 
 
 #endif
