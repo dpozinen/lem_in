@@ -12,13 +12,13 @@
 
 #include "lem_in.h"
 
-char	*get_room_name(t_room *p_head, int index)
+char	*get_room_name(t_room *r_head, int index)
 {
-	while (p_head)
+	while (r_head)
 	{
-		if (p_head->index == index)
-			return (p_head->name);
-		p_head = p_head->next;
+		if (r_head->index == index)
+			return (r_head->name);
+		r_head = r_head->next;
 	}
 	return (0);
 }

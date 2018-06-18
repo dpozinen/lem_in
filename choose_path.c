@@ -24,7 +24,7 @@ int			choose_paths(t_main *lem)
 	while (++i < set_n)
 		paths[i] = i;
 	print_all_paths(lem->p_head, lem->r_head); // DEL
-	while (set_n <= lem->max_set_n && traverse_all_paths(set_n, lem, paths))
+	while (set_n <= lem->set_n && traverse_all_paths(set_n, lem, paths))
 	{
 		set_n++;
 		free(paths);

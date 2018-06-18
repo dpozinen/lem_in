@@ -21,9 +21,10 @@ int		main(int nargs, char **args)
 	lem = boot_struct();
 	read_input(lem);
 	if (args[1])
-		lem->max_set_n = ft_atoi(args[1]);
+		lem->set_n = ft_atoi(args[1]);
 	MALCHK(pathfinder(lem));
 	choose_paths(lem);
+	output(lem->best_set, lem);
 	shutdown(lem, 0, 0);
 	system("leaks lem-in");
 	return (0);

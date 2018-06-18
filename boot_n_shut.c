@@ -21,7 +21,7 @@ t_main		*boot_struct(void)
 	lem->r_head = 0;
 	lem->p_head = 0;
 	lem->rooms = 0;
-	lem->max_set_n = 3;
+	lem->set_n = 3;
 	lem->paths = 0;
 	lem->best_set = 0;
 	lem->istart = -1;

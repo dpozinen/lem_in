@@ -11,8 +11,9 @@
 #******************************************************************************#
 
 LEMSRC =	main.c read.c find_path.c choose_path.c tools_path.c \
-			tools_validation.c tools_room.c tools_int_array.c \
-			boot_n_shut.c tools_1.c intersect.c extras.c tools_choose_path.c
+			tools_validation.c tools_room.c tools_int_array.c output.c \
+			boot_n_shut.c tools_1.c intersect.c extras.c tools_choose_path.c \
+			tools_output.c
 OBJDIR = objects
 FLAGS = -Wall -Werror -Wextra
 
@@ -50,7 +51,7 @@ fclean: clean
 re: fclean all
 
 go: $(NAME)
-	./$(NAME) < test
+	./$(NAME) < tests/test
 
 d: make_lib $(OBJDIR) $(LEMOBJ)
 	@ar rc $(LEMLIBNAME) $(LEMOBJ)

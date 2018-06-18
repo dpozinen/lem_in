@@ -39,7 +39,7 @@ typedef struct		s_room
 
 typedef struct		s_main
 {
-	int				max_set_n;
+	int				set_n;
 	int				paths;
 	int				ants;
 	char			*input_s;
@@ -133,5 +133,16 @@ int		get_efficiency(int *lengths, int n_of_paths, int ants, int *path_congestion
 void	printf_found(int set_n, t_main *lem);
 void	print_all_paths(t_path *path, t_room *r_head);
 
+/*
+* output.c ▽
+*/
+int		output(t_path **set, t_main *lem);
+
+/*
+* tools_output.c ▽
+*/
+int			**make_set_arr(t_path **set, int *set_n);
+char		***make_set_rooms(t_path **set, int set_n, t_room *r_head);
+int				is_last_end(int **set_arr, t_path **set, int set_n);
 
 #endif
