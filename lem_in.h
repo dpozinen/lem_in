@@ -40,6 +40,7 @@ typedef struct		s_room
 typedef struct		s_main
 {
 	int				set_n;
+	int				log;
 	int				paths;
 	int				ants;
 	char			*input_s;
@@ -132,6 +133,7 @@ int		get_efficiency(int *lengths, int n_of_paths, int ants, int *path_congestion
 */
 void	printf_found(int set_n, t_main *lem);
 void	print_all_paths(t_path *path, t_room *r_head);
+void	read_flags(char **args, t_main *lem);
 
 /*
 * output.c ▽

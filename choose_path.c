@@ -23,7 +23,6 @@ int			choose_paths(t_main *lem)
 	i = -1;
 	while (++i < set_n)
 		paths[i] = i;
-	print_all_paths(lem->p_head, lem->r_head); // DEL
 	while (set_n <= lem->set_n && traverse_all_paths(set_n, lem, paths))
 	{
 		set_n++;
@@ -32,7 +31,7 @@ int			choose_paths(t_main *lem)
 			return (0);
 		free(lem->temp_best_set);
 		lem->temp_best_set = 0;
-		printf_found(set_n - 1, lem); // DEL
+		lem->log ? printf_found(set_n - 1, lem) : 0;
 		MALCHK((paths = make_int_arr(set_n, -1)));
 		i = -1;
 		while (++i < set_n)

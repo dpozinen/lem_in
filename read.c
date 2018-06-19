@@ -51,6 +51,12 @@ static void	add_room(t_main *lem, char *line)
 	lem->rooms++;
 }
 
+static int	save_s(t_main *lem, char *line)
+{
+	lem->input_s = free_n_join(lem->input_s, ft_strjoin(line, "\n"), 3);
+	return (1);
+}
+
 static void	add_command(char *line, t_main *lem)
 {
 	int		f;
@@ -64,10 +70,17 @@ static void	add_command(char *line, t_main *lem)
 		return ;
 	get_next_line(0, &line);
 	SHUTLEMLINE(validate_as_room(line));
+	save_s(lem, line);
 	if (f == 1)
+	{
+		SHUTLEMLINE((lem->istart == -1));
 		lem->istart = lem->rooms;
+	}
 	else
+	{
+		SHUTLEMLINE((lem->iend == -1));
 		lem->iend = lem->rooms;
+	}
 	add_room(lem, line);
 	free(line);
 }
@@ -78,20 +91,22 @@ int			read_input(t_main *lem)
 
 	RDCHK(get_next_line(0, &line));
 	SHUTLEMLINE(validate_as_int(line));
+	save_s(lem, line);
 	MALCHK((lem->ants = ft_atoi(line)));
 	free(line);
 	while (get_next_line(0, &line))
 	{
-		MALCHK((lem->input_s =
-				free_n_join(lem->input_s, ft_strjoin(line, "\n"), 3)));
-		if (*line == '#')
+		if (*line == '#' && save_s(lem, line))
 			add_command(line, lem);
-		else if (validate_as_room(line))
+		else if (validate_as_room(line) && save_s(lem, line))
 			add_room(lem, line);
-		else if (validate_as_link(line, lem))
+		else if (validate_as_link(line, lem) && save_s(lem, line))
 			add_link(lem, line);
 		else
-			break ;
+		{
+			free(line);
+			return (1);
+		}
 		free(line);
 	}
 	return (1);

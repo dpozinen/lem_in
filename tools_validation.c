@@ -29,6 +29,7 @@ int		validate_as_room(char *line)
 	int	spaces;
 
 	MALCHK(*line);
+	MALCHK(line);
 	MALCHK((*line != 'L'));
 	i = get_char_index(line, ' ') + 1;
 	spaces = 1;
@@ -48,7 +49,7 @@ int		validate_as_link(char *line, t_main *lem)
 {
 	char *room_name;
 
-	if (!*line)
+	if (!*line || !line)
 		return (0);
 	room_name = make_room_name(line, '-');
 	if (get_room_index(lem->r_head, room_name) == -1)

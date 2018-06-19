@@ -92,13 +92,13 @@ int			pathfinder(t_main *lem)
 {
 	int		*current_path;
 
-	if (lem->ants == 0 || lem->iend == -1 || lem->istart == -1)
+	if (lem->iend == -1 || lem->istart == -1 || !lem->r_head)
 		return (0);
 	MALCHK((current_path = make_int_arr(lem->rooms, -1)));
 	current_path[0] = lem->istart;
 	find_paths(lem->istart, current_path, lem);
 	free(current_path);
-	if (!lem->p_head || !lem->r_head)
+	if (!lem->p_head)
 		return (0);
 	return (1);
 }

@@ -12,6 +12,24 @@
 
 #include "lem_in.h"
 
+void	read_flags(char **args, t_main *lem)
+{
+	if (args[1])
+	{
+		if (validate_as_int(args[1]))
+			lem->set_n = ft_atoi(args[1]);
+		else if (!ft_strcmp(args[1], "-log"))
+			lem->log = 1;
+	}
+	if (args[2])
+	{
+		if (validate_as_int(args[2]))
+			lem->set_n = ft_atoi(args[2]);
+		else if (!ft_strcmp(args[2], "-log"))
+			lem->log = 1;
+	}
+}
+
 void	print_all_paths(t_path *path, t_room *r_head)
 {
 	char	*room_name;
@@ -38,7 +56,7 @@ void	printf_found(int set_n, t_main *lem)
 	int		*lengths;
 	int		i;
 
-	ft_printf("%d\n", set_n);
+	ft_printf("\n%d\n", set_n);
 	set_n++;
 	ft_printf("eff = %d\n", lem->eff);
 	ft_printf("ant : ");

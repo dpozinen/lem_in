@@ -43,7 +43,7 @@ int			get_efficiency(int *lengths, int n_of_paths,
 	int		i;
 	int		ants_sum;
 
-	if (n_of_paths == 1 && lengths[0] == 1)
+	if (n_of_paths == 1 && lengths[0] == 1 && (path_congestion[0] = ants))
 		return (1);
 	worst = max_int_arr(lengths, n_of_paths);
 	ants_sum = sum_int_array(path_congestion, n_of_paths);

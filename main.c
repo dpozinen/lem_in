@@ -16,16 +16,16 @@ int		main(int nargs, char **args)
 {
 	t_main *lem;
 
-	if (nargs > 2)
+	if (nargs > 3)
 		return (0);
 	lem = boot_struct();
 	read_input(lem);
-	if (args[1])
-		lem->set_n = ft_atoi(args[1]);
-	MALCHK(pathfinder(lem));
+	read_flags(args, lem);
+	SHUTLEM(pathfinder(lem));
+	ft_printf("%s", lem->input_s);
 	choose_paths(lem);
 	output(lem->best_set, lem);
 	shutdown(lem, 0, 0);
-	system("leaks lem-in");
+	// system("leaks lem-in");
 	return (0);
 }

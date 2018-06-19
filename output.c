@@ -54,12 +54,7 @@ void		print_move(int **set_arr, char ***set_r, int set_n, t_path **set)
 		while (j > 0)
 		{
 			if (set_arr[i][j] != 0)
-			{
-				ft_printf("L");
-				ft_printf("%d", set_arr[i][j]);
-				ft_printf("-");
-				ft_printf("%s ", set_r[i][j]);
-			}
+				ft_printf("L%d-%s ", set_arr[i][j], set_r[i][j]);
 			j--;
 		}
 		i++;
@@ -92,14 +87,16 @@ int			output(t_path **set, t_main *lem)
 	MALCHK((set_rooms = make_set_rooms(set, set_n, lem->r_head)));
 	lem->set_n = set_n;
 	last = 0;
+	(*set)->length == 1 ? ft_printf("\n") : 0;
 	while (last <= lem->ants)
 	{
-		if (last == lem->ants && is_last_end(set_arr, set, set_n))
-			break ;
 		move_ants(lem, set, set_arr, &last);
 		print_move(set_arr, set_rooms, set_n, set);
-		ft_printf("\n");
+		if (last == lem->ants && is_last_end(set_arr, set, set_n))
+			break ;
+		(*set)->length > 1 ? ft_printf("\n") : 0;
 	}
+	(*set)->length == 1 ? ft_printf("\n") : 0;
 	free_arr_rooms(set_arr, set_n, set_rooms);
 	return (1);
 }
