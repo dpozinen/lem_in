@@ -27,6 +27,6 @@ int		main(int nargs, char **args)
 	choose_paths(lem);
 	output(lem->best_set, lem);
 	shutdown(lem, 0, 0);
-	// system("leaks lem-in");
+	system("leaks lem_in");
 	return (0);
 }

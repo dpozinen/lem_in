@@ -19,14 +19,14 @@ FLAGS = -Wall -Werror -Wextra
 
 LEMOBJ = $(addprefix $(OBJDIR)/, $(LEMSRC:.c=.o))
 
-LEMLIBNAME = lem-in_lib.a
-NAME = lem-in
+LEMLIBNAME = lem_in_lib.a
+NAME = lem_in
 
 all: $(NAME)
 
 $(NAME): make_lib $(OBJDIR) $(LEMOBJ)
 	@ar rc $(LEMLIBNAME) $(LEMOBJ)
-	@gcc $(FLAGS) -o $(NAME) $(LEMLIBNAME) libft/libft.a -I libft/libft.h
+	@gcc $(FLAGS) -o $(NAME) $(LEMLIBNAME) libft/libft.a
 	@echo "made ./$(NAME)"
 
 make_lib:
@@ -35,18 +35,16 @@ make_lib:
 $(OBJDIR):
 	@mkdir $(OBJDIR)
 
-$(LEMOBJ) : $(OBJDIR)/%.o : %.c
-	@gcc $(FLAGS) -c $< -o $@
+$(LEMOBJ) : $(OBJDIR)/%.o : src/%.c
+	@gcc $(FLAGS) -c $< -o $@ -I.
 
 clean:
 	@rm -rf $(OBJDIR)
-	@rm $(LEMLIBNAME)
-	@rm $(NAME)
-	# @rm $(NAME)_debug
+	@rm -rf $(LEMLIBNAME)
+	@rm -rf $(NAME)
 
 fclean: clean
 	@make fclean -C libft
-	#@rm *~
 
 re: fclean all
 
