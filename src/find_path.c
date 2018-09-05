@@ -92,7 +92,8 @@ int			pathfinder(t_main *lem)
 {
 	int		*current_path;
 
-	if (lem->iend == -1 || lem->istart == -1 || !lem->r_head)
+	if (lem->iend == -1 || lem->istart == -1 || !lem->r_head
+		|| !lem->room_matrix)
 		return (0);
 	MALCHK((current_path = make_int_arr(lem->rooms, -1)));
 	current_path[0] = lem->istart;

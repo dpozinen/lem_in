@@ -15,7 +15,7 @@ LEMSRC =	main.c read.c find_path.c choose_path.c tools_path.c \
 			boot_n_shut.c tools_1.c intersect.c extras.c tools_choose_path.c \
 			tools_output.c
 OBJDIR = objects
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 LEMOBJ = $(addprefix $(OBJDIR)/, $(LEMSRC:.c=.o))
 

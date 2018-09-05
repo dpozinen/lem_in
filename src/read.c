@@ -24,6 +24,7 @@ static void	add_link(t_main *lem, char *line)
 	i = get_room_index(lem->r_head, room_name);
 	free(room_name);
 	j = get_room_index(lem->r_head, (line + get_char_index(line, '-') + 1));
+	SHUTLEMLINE((i > lem->rooms || j > lem->rooms));
 	lem->room_matrix[i][j] = 1;
 	lem->room_matrix[j][i] = 1;
 }

@@ -57,94 +57,95 @@ typedef struct		s_main
 }					t_main;
 
 /*
-* tools_1.c ▽
+** tools_1.c ▽
 */
 int					**make_matrix(t_main *lem);
 
 /*
-* validation_functions.c ▽
+** validation_functions.c ▽
 */
-int		validate_as_int(char *line);
-int		validate_as_room(char *line);
-int		validate_as_link(char *line, t_main *lem);
+int					validate_as_int(char *line);
+int					validate_as_room(char *line);
+int					validate_as_link(char *line, t_main *lem);
 
 /*
-* room_functions.c ▽
+** room_functions.c ▽
 */
-char	*get_room_name(t_room *p_head, int index);
-char	*make_room_name(char *line, char c);
-void	print_all_paths(t_path *path, t_room *r_head);
-int		get_room_index(t_room *r_head, char *line);
-t_room	*make_room_list(t_main *lem, char *line);
+char				*get_room_name(t_room *p_head, int index);
+char				*make_room_name(char *line, char c);
+void				print_all_paths(t_path *path, t_room *r_head);
+int					get_room_index(t_room *r_head, char *line);
+t_room				*make_room_list(t_main *lem, char *line);
 
 /*
-* read.c ▽
+** read.c ▽
 */
-int			read_input(t_main *lem);
+int					read_input(t_main *lem);
 
 /*
-* path_functions.c ▽
+** path_functions.c ▽
 */
-int		count_path_length(int *arr, int size);
-int		*get_set_lengths(t_path **path_arr, int n_of_paths);
-t_path	*get_path(t_path *path, int name);
-t_path	**get_paths_pointers(int *paths, int set_n, t_path *p_head);
-t_path	**pathdup(t_path **path_arr, int size);
+int					count_path_length(int *arr, int size);
+int					*get_set_lengths(t_path **path_arr, int n_of_paths);
+t_path				*get_path(t_path *path, int name);
+t_path				**get_paths_pointers(int *paths, int set_n, t_path *p_head);
+t_path				**pathdup(t_path **path_arr, int size);
 
 /*
-* int_array_functions.c ▽
+** int_array_functions.c ▽
 */
-int		*make_int_arr(int size, int num);
-int		find_int_in_arr(int i, int *arr, int size);
-int		intersect(int *arr1, int *arr2, int size1, int size2);
-int		max_int_arr(int *arr, int size);
-int		sum_int_array(int *array, int size);
-int		find_min_index(int *arr, int size);
-int		*intdup(int *arr, int size);
+int					*make_int_arr(int size, int num);
+int					find_int_in_arr(int i, int *arr, int size);
+int					intersect(int *arr1, int *arr2, int size1, int size2);
+int					max_int_arr(int *arr, int size);
+int					sum_int_array(int *array, int size);
+int					find_min_index(int *arr, int size);
+int					*intdup(int *arr, int size);
 
 /*
-* find_path.c ▽
+** find_path.c ▽
 */
-int			pathfinder(t_main *lem);
-void		add_point(int i, int *current_path, int size);
+int					pathfinder(t_main *lem);
+void				add_point(int i, int *current_path, int size);
 
 /*
-* choose_path.c ▽
+** choose_path.c ▽
 */
-int			choose_paths(t_main *lem);
+int					choose_paths(t_main *lem);
 
-int			traverse_all_paths(int set_n, t_main *lem, int *paths);
-int			save_best_set(t_path **path_arr, int set_n, t_main *lem);
-
-/*
-* boot_n_shut.c ▽
-*/
-void	shutdown(t_main *lem, char *line, int f);
-t_main	*boot_struct(void);
+int					traverse_all_paths(int set_n, t_main *lem, int *paths);
+int					save_best_set(t_path **path_arr, int set_n, t_main *lem);
 
 /*
-* intersect.c ▽
+** boot_n_shut.c ▽
 */
-int		set_intersect(t_path **path_arr, int set_n, t_main *lem);
-int		get_efficiency(int *lengths, int n_of_paths, int ants, int *path_congestion);
+void				shutdown(t_main *lem, char *line, int f);
+t_main				*boot_struct(void);
 
 /*
-* extras.c ▽
+** intersect.c ▽
 */
-void	printf_found(int set_n, t_main *lem);
-void	print_all_paths(t_path *path, t_room *r_head);
-void	read_flags(char **args, t_main *lem);
+int					set_intersect(t_path **path_arr, int set_n, t_main *lem);
+int					get_efficiency(int *lengths, int n_of_paths, int ants,
+													int *path_congestion);
 
 /*
-* output.c ▽
+** extras.c ▽
 */
-int		output(t_path **set, t_main *lem);
+void				printf_found(int set_n, t_main *lem);
+void				print_all_paths(t_path *path, t_room *r_head);
+void				read_flags(char **args, t_main *lem);
 
 /*
-* tools_output.c ▽
+** output.c ▽
 */
-int			**make_set_arr(t_path **set, int *set_n);
-char		***make_set_rooms(t_path **set, int set_n, t_room *r_head);
-int				is_last_end(int **set_arr, t_path **set, int set_n);
+int					output(t_path **set, t_main *lem);
+
+/*
+** tools_output.c ▽
+*/
+int					**make_set_arr(t_path **set, int *set_n);
+char				***make_set_rooms(t_path **set, int set_n, t_room *r_head);
+int					is_last_end(int **set_arr, t_path **set, int set_n);
 
 #endif
